@@ -50,7 +50,7 @@ class EditTrick extends React.Component{
           </div>
           <div className="row">          
             <TrickForm 
-              trick={this.props.tricks.filter(x => x.id === this.props.match.params.id)[0]}
+              trick={this.state}
               handleScriptChange={this.scriptChangeHandler}
               handleNameChange={this.nameChangeHandler} 
             />
@@ -62,7 +62,7 @@ class EditTrick extends React.Component{
             </div>
           </div>
           <div className="row">
-            <PropList trick={this.props.tricks.filter(x => x.id === this.props.match.params.id)[0]} />
+            <PropList trick={this.state} />
           </div>          
       </div>
 
