@@ -1,26 +1,41 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux'
+import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import TrickListing from './components/trick-listing/trick-listing'
+import NotFound from './components/notfound/notfound'
+import EditTrick from './components/edit-trick/edit-trick'
+import Header from './components/header/header'
+import AddTrick from './components/add-trick/add-trick'
+import EditProps from './components/edit-props/edit-props'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props){
+    super(props)
+    console.log('dddddd')
+  }
+
+  render(){
+    return (
+
+      <BrowserRouter>
+        <div>
+          <Header />
+          <Switch>
+            <Route path="/" component={TrickListing} exact={true} />
+            <Route path="/edit/:id" component={EditTrick} />
+            <Route path="/add/" component={AddTrick} />
+            <Route path="/props/" component={EditProps} />
+            <Route component={NotFound} />
+          </Switch>
+        </div>
+      </BrowserRouter>
+   );
+  }
 }
 
-export default App;
+export default connect((state => {
+  return {
+    tricks: state.tricks
+  };
+}))(App);
