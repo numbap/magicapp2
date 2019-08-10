@@ -19,27 +19,21 @@ class AddTrick extends React.Component{
 
   scriptChangeHandler = (e) => {
     this.setState({script:e})
-    console.log(this.state)
   }
 
   nameChangeHandler = (e) => {
     this.setState({ name:e.target.value})
-    console.log(this.state)
   }
 
   handleSave = async () => {
     await this.setState({id:uuid()})
     await this.props.startAddTrick(this.state, this.props.user.uid)
-    this.props.history.push("/")
+    await this.props.history.push("/")
     
   }
 
   render(){
-    console.log(this.state, 'state')
     return(
-
-
-
       <div className="container">
           <div className="row">
             <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -90,27 +84,3 @@ class AddTrick extends React.Component{
 
   export default connect(mapStateToProps, mapDispatchToProps)(AddTrick);
 
-
-
-
-
-
-
-
-
-//   <div className="App">
-//   <h1>Add Trick</h1>
-//   <h2>New Trick</h2>
-//   <TrickForm 
-//     trick={this.state}
-//     handleScriptChange={this.scriptChangeHandler}
-//     handleNameChange={this.nameChangeHandler} 
-//   />
-//   <p> </p>
-//   <div className="d-flex justify-content-between">
-//     <button 
-//       type="button" 
-//       className="btn btn-primary"
-//       onClick={this.handleSave}>Add Trick</button>
-//   </div>
-// </div>

@@ -21,5 +21,4 @@ const rootReducer = combineReducers({
     currentTrick: currentTrickReducer
 })
 
-// export default persistReducer(persistConfig, rootReducer)
 export default rootReducer

@@ -16,7 +16,7 @@ class EditProps extends React.Component{
 
     componentDidMount(){
         console.log(this.props.user.uid)
-        console.log(this.props)
+        console.log(this.props, "ddddddd")
     }
 
     handeAdd = async () => {
@@ -35,14 +35,9 @@ class EditProps extends React.Component{
 
     render(){
         return (
-
-
-
-
-
-            <div className="container">
+          <div className="container">
             <div className="row">
-              <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+              <div className="text-center">
                 <h1 className="display-4">Add Props</h1>
               </div>
             </div>
@@ -122,7 +117,7 @@ const mapDispatchToProps = (dispatch, props) => ({
       return { 
         props: state.props,
         user: state.user,
-        currentTrick: state.currentTrick }
+        tricks: state.tricks }
   }
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProps);

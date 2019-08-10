@@ -9,7 +9,7 @@ const TrickListing = (props) => {
   
       <div className="container">
           <div className="row">
-            <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <div className="col-md-12">
               <h1 className="display-4">Trick Listing</h1>
             </div>
             <table className="table">

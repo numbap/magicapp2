@@ -8,7 +8,7 @@ class PropList extends React.Component{
     super(props)
 
     this.state = {
-        id: '',
+        id: uuid(),
         propId: '',
         description: '',
         quantity: 0
@@ -16,23 +16,9 @@ class PropList extends React.Component{
 
   }
 
-  handleSave = async () => {
-    await this.setState({id:uuid()})
-    await this.props.startAddPropToTrick(this.state, this.props.trick.id, this.props.user.uid)
-    await this.setState({id: '', propId: '', description: '', quantity: 0 })
-    console.log(this.props.trick)
-  }
-
-  handleDelete = async (propId, trickId) => {
-    await this.props.startRemovePropFromTrick(propId, trickId, this.props.user.uid)
-    this.setState({id: '', propId: '', description: '', quantity: 0 })
-  }
-
   render(){
+    console.log(this.props.trick, "current trick")
     return (
-
-
-      
       <div className="row">
         <table className="table">
         <thead>
@@ -48,8 +34,11 @@ class PropList extends React.Component{
                 <tr key={x.id}>
                 <th scope="row">{i}</th>
                 <td>{x.description}</td>
-                <td>{x.quantity}</td>
-                <td><i className="fas fa-trash-alt" style={{cursor: 'pointer'}} onClick={() => this.handleDelete(x.id, this.props.trick.id)}></i></td>
+                <td>{x.quantity} - {this.props.user.uid}</td>
+                <td><i className="fas fa-trash-alt" style={{cursor: 'pointer'}} onClick={async () => {
+                  await this.props.handleDelete(x.id, this.props.trick.id, this.props.user.uid)
+                  this.setState({id: '', propId: '', description: '', quantity: 0 })
+                }}></i></td>
                 </tr>
             ))}
 
@@ -91,7 +80,10 @@ class PropList extends React.Component{
             <td><button 
             type="button" 
             className="btn btn-primary"
-            onClick={this.handleSave}
+            onClick={() => {
+              this.props.handleSave({...this.state, id:uuid()}, this.props.trick.id, this.props.user.uid)
+              this.setState({id: '', propId: '', description: '', quantity: 0 })
+            }}
             >Add</button></td>
             
             </tr>
@@ -116,11 +108,6 @@ const mapDispatchToProps = (dispatch, props) => ({
   startRemovePropFromTrick: (propId, trickId, uid) => dispatch({
     type: 'DELETE_PROP_FROM_TRICK', 
     propId: propId, 
-    trickId: trickId,
-    uid: uid
-  }),
-  startSetCurrentTrick: (trickId, uid) => dispatch({
-    type: 'SET_CURRENT_TRICK', 
     trickId: trickId,
     uid: uid
   })

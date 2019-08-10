@@ -11,6 +11,7 @@ const tricksReducer = (state = INITIAL_STATE, action) => {
         case 'DELETE_TRICK_ASYNC':
             return state.filter(x => x.id !== action.trickId)
         case 'SET_TRICKS_ASYNC':
+            console.log('setting tricks', action.tricks)
             return action.tricks
         case 'ADD_PROP_TO_TRICK_ASYNC':
             var tmp = state
@@ -19,7 +20,6 @@ const tricksReducer = (state = INITIAL_STATE, action) => {
         case 'DELETE_PROP_FROM_TRICK_ASYNC':
             var tmp = state
             tmp.filter(x => x.id === action.trickId)[0].props = tmp.filter(x => x.id === action.trickId)[0].props.filter(x => x.id !== action.propId)
-            console.log(tmp)
             return tmp
         default:
             return state;

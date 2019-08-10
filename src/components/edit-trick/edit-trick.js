@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux'
 import TrickForm from '../trick-form/trick-form'
 import PropList from '../proplist/proplist'
+import uuid from 'uuid'
+
 
 class EditTrick extends React.Component{
   constructor(props){
@@ -30,12 +32,22 @@ class EditTrick extends React.Component{
 
   handleSave = async () => {
     await this.props.startAddTrick(this.state, this.props.user.uid)
-    this.props.history.push("/")
+    await this.props.history.push("/")
   }
 
   handleDelete = async () => {
     await this.props.startRemoveTrick(this.state.id, this.props.user.uid)
-    this.props.history.push("/")
+    await this.props.history.push("/")
+  }
+
+  handlePropSave = async (prop, trickId, uid) => {
+    await this.props.startAddPropToTrick(prop, trickId, uid)
+    await console.log(this.props.prop)
+  }
+
+  handlePropDelete = async (propId, trickId, uid) => {
+    await this.props.startRemovePropFromTrick(propId, trickId, uid)
+    await this.setState({id: '', propId: '', description: '', quantity: 0 })
   }
 
   render(){
@@ -43,27 +55,41 @@ class EditTrick extends React.Component{
 
 
       <div className="container">
-          <div className="row">
-            <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-              <h1 className="display-4">Edit Trick</h1>
+      {this.props.tricks.map( x => 
+        {
+          if(x.id === this.props.match.params.id){
+
+            return (
+              <div key={x.id}>
+                  <div className="row">
+                  <div className="col-md-12">
+                    <h1 className="display-4">Edit Trick</h1>
+                  </div>
+                </div>
+                <div className="row">
+                  <div col="col-md-12">
+                    <TrickForm 
+                    trick={this.state}
+                    handleScriptChange={this.scriptChangeHandler}
+                    handleNameChange={this.nameChangeHandler} 
+                    />
+                  </div>          
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                  <button type="button" className="btn btn-primary" onClick={this.handleSave}>Save</button>
+                  <button type="button" className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
+                  </div>
+                </div>
+                <div className="row">
+                  <PropList handleSave={this.handlePropSave} handleDelete={this.handlePropDelete} trick={x} />
+                </div>
             </div>
-          </div>
-          <div className="row">          
-            <TrickForm 
-              trick={this.state}
-              handleScriptChange={this.scriptChangeHandler}
-              handleNameChange={this.nameChangeHandler} 
-            />
-          </div>
-          <div className="row">
-            <div className="d-flex ">
-            <button type="button" className="btn btn-primary" onClick={this.handleSave}>Save</button>
-            <button type="button" className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
-            </div>
-          </div>
-          <div className="row">
-            <PropList trick={this.state} />
-          </div>          
+
+            );
+          }
+
+        })}
       </div>
 
     );
@@ -93,14 +119,26 @@ const mapDispatchToProps = (dispatch, props) => ({
   }),
   clearCurrentTrick: (trickId, uid) => dispatch({
     type: 'CLEAR_CURRENT_TRICK'
+  }),
+  startAddPropToTrick: (prop, trickId, uid) => dispatch({
+    type: 'ADD_PROP_TO_TRICK',
+    prop: prop, 
+    trickId: trickId,
+    uid: uid
+  }),
+  startRemovePropFromTrick: (propId, trickId, uid) => dispatch({
+    type: 'DELETE_PROP_FROM_TRICK', 
+    propId: propId, 
+    trickId: trickId,
+    uid: uid
   })
 });
 
 // This should be class level
 const mapStateToProps = state => {
     return { 
-      tricks: state.tricks,
-      user: state.user
+      user: state.user, 
+      tricks: state.tricks
     }
 }
 

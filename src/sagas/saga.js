@@ -3,8 +3,9 @@ import database, {auth, firebase, googleAuthProvider } from '../firebase/firebas
 
 function* addTrickAsync(action){
     try{
-        yield console.log('trick added with Saga')
-        yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trick.id).set(action.trick)
+        let firebaseTrick = {...action.trick}
+        yield firebaseTrick.props = firebaseTrick.props.reduce( (a = {}, v) => {return { ...a, [v.id]:v }}, {} )
+        yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trick.id).set(firebaseTrick)
         yield put({type: 'ADD_TRICK_ASYNC', trick: action.trick})
     } catch(error){
         yield console.log(error)
@@ -15,7 +16,6 @@ function* addTrickAsync(action){
 
 function* deletePropFromTrickAsync(action){
     try{
-        yield console.log('Deleting with Saga', action)
         yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trickId + "/props/" + action.propId).set(null)
         yield put({ type: 'DELETE_PROP_FROM_TRICK_ASYNC', trickId: action.trickId, propId: action.propId })
     } catch(error){
@@ -27,7 +27,6 @@ function* deletePropFromTrickAsync(action){
 
 function* deleteTrickAsync(action){
     try{
-        yield console.log('trick added with Saga', action)
         yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trickId).set(null)
         yield put({type: 'DELETE_TRICK_ASYNC', trickId: action.trickId})
     } catch(error){
@@ -37,7 +36,6 @@ function* deleteTrickAsync(action){
 
 function* addPropToTrickAsync(action){
     try{
-        yield console.log('trick prop added with Saga')
         yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trickId + "/props/" + action.prop.id).set(action.prop)
         yield put({type: 'ADD_PROP_TO_TRICK_ASYNC', trickId: action.trickId, prop: action.prop})
     } catch(error){
@@ -87,7 +85,6 @@ function* addPropAsync(action){
 
 function* deletePropAsync(action){
     try{
-        yield console.log('trick added with Saga', action)
         yield database.ref('/magicapp/' + action.uid + '/props/' + action.propId).set(null)
         yield put({type: 'DELETE_PROP_ASYNC', propId: action.propId})
     } catch(error){
@@ -98,7 +95,6 @@ function* deletePropAsync(action){
 
 // Make this work
 function* setPropsAsync(action) {
-    console.log('...setting Props')
     try{
 
         const propList = yield database.ref('/magicapp/' + action.uid + '/props/')
@@ -110,7 +106,6 @@ function* setPropsAsync(action) {
             })
             return arraySnap
         })
-        yield console.log(propList, "Prop List")
        yield put({type: 'SET_PROPS_ASYNC', props: propList})
     } catch(error) {
         yield console.log(error)
@@ -148,7 +143,6 @@ export function* rootSaga() {
         takeEvery('SET_TRICKS', setTricksAsync),
         takeEvery('ADD_PROP', addPropAsync),
         takeEvery('DELETE_PROP', deletePropAsync),
-        takeEvery('SET_PROPS', setPropsAsync),
-        takeEvery('SET_CURRENT_TRICK', setCurrentTrick)
+        takeEvery('SET_PROPS', setPropsAsync)
     ])
 }
