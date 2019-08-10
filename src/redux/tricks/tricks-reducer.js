@@ -1,8 +1,6 @@
 import { takeEvery } from "redux-saga/effects";
 
-const INITIAL_STATE = [
-]
-
+const INITIAL_STATE = []
 
 const tricksReducer = (state = INITIAL_STATE, action) => {
     switch(action.type){
@@ -14,13 +12,13 @@ const tricksReducer = (state = INITIAL_STATE, action) => {
             console.log('setting tricks', action.tricks)
             return action.tricks
         case 'ADD_PROP_TO_TRICK_ASYNC':
-            var tmp = state
-            tmp.filter(x => x.id === action.trickId)[0].props.push(action.prop)
-            return tmp
+            var tmpAddProp = [...state]
+            tmpAddProp.filter(x => x.id === action.trickId)[0].props.push(action.prop)
+            return tmpAddProp
         case 'DELETE_PROP_FROM_TRICK_ASYNC':
-            var tmp = state
-            tmp.filter(x => x.id === action.trickId)[0].props = tmp.filter(x => x.id === action.trickId)[0].props.filter(x => x.id !== action.propId)
-            return tmp
+            var tmpDelProp = [...state]
+            tmpDelProp.filter(x => x.id === action.trickId)[0].props = tmpDelProp.filter(x => x.id === action.trickId)[0].props.filter(x => x.id !== action.propId)
+            return tmpDelProp
         default:
             return state;
     }

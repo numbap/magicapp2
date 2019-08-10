@@ -16,17 +16,17 @@ const TrickListing = (props) => {
               <thead>
                 <tr>
                   <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
+                  <th scope="col">Trick Name</th>
+                  <th scope="col">Props</th>
                 </tr>
               </thead>
               <tbody>
                 {props.tricks.map((x, i) => (
       
                   <tr key={i}>
-                  <th scope="row">{i}</th>
+                  <th scope="row">{i + 1}</th>
                   <td><Link to={`/edit/${x.id}`}>{x.name}</Link></td>
-                  <td>{x.id}</td>
+                  <td>{x.props.length}</td>
                 </tr>
       
                 )

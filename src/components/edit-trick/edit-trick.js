@@ -41,13 +41,18 @@ class EditTrick extends React.Component{
   }
 
   handlePropSave = async (prop, trickId, uid) => {
-    await this.props.startAddPropToTrick(prop, trickId, uid)
-    await console.log(this.props.prop)
+    console.log(prop, "This is the prop")
+    if(prop.description && parseInt(prop.quantity)){
+      await this.props.startAddPropToTrick(prop, trickId, uid)
+      await console.log(this.props.prop)
+    }
   }
 
   handlePropDelete = async (propId, trickId, uid) => {
-    await this.props.startRemovePropFromTrick(propId, trickId, uid)
-    await this.setState({id: '', propId: '', description: '', quantity: 0 })
+    if(propId){
+      await this.props.startRemovePropFromTrick(propId, trickId, uid)
+      await this.setState({id: '', propId: '', description: '', quantity: 0 })
+    }
   }
 
   render(){
@@ -60,31 +65,36 @@ class EditTrick extends React.Component{
           if(x.id === this.props.match.params.id){
 
             return (
-              <div key={x.id}>
-                  <div className="row">
-                  <div className="col-md-12">
-                    <h1 className="display-4">Edit Trick</h1>
-                  </div>
-                </div>
+            <div>
+            
                 <div className="row">
-                  <div col="col-md-12">
+                <div className="col-md-12">
+                  <h1 className="display-4">Edit Trick</h1>
+                </div>
+              </div>
+
+              <div key={x.id} className="row" >
+                <div className="col-md-8">
+
+
                     <TrickForm 
                     trick={this.state}
                     handleScriptChange={this.scriptChangeHandler}
                     handleNameChange={this.nameChangeHandler} 
                     />
-                  </div>          
+                  <p></p>
+                  <button type="button" className="btn btn-primary float-left" onClick={this.handleSave}>Save</button>
+                  <button type="button" className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                  <button type="button" className="btn btn-primary" onClick={this.handleSave}>Save</button>
-                  <button type="button" className="btn btn-danger" onClick={this.handleDelete}>Delete</button>
-                  </div>
-                </div>
-                <div className="row">
-                  <PropList handleSave={this.handlePropSave} handleDelete={this.handlePropDelete} trick={x} />
-                </div>
+
+                <PropList handleSave={this.handlePropSave} handleDelete={this.handlePropDelete} trick={x} />
+
+            </div>            
+            
+            
             </div>
+
+
 
             );
           }

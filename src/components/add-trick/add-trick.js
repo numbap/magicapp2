@@ -36,19 +36,16 @@ class AddTrick extends React.Component{
     return(
       <div className="container">
           <div className="row">
-            <div className="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+            <div className="col-md-12">
               <h1 className="display-4">Add Trick</h1>
-            </div>
-          </div>
-          <div className="row">          
+         
               <TrickForm 
               trick={this.state}
               handleScriptChange={this.scriptChangeHandler}
               handleNameChange={this.nameChangeHandler} 
             />
-          </div>
-          <div className="row">
-            <div className="d-flex ">
+
+              <p></p>
               <button 
                 type="button" 
                 className="btn btn-primary"

@@ -1,5 +1,5 @@
-import {takeLatest, takeEvery, put, all} from 'redux-saga/effects'
-import database, {auth, firebase, googleAuthProvider } from '../firebase/firebase';
+import {takeEvery, put, all} from 'redux-saga/effects'
+import database from '../firebase/firebase';
 
 function* addTrickAsync(action){
     try{
@@ -13,7 +13,6 @@ function* addTrickAsync(action){
 
 }
 
-
 function* deletePropFromTrickAsync(action){
     try{
         yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trickId + "/props/" + action.propId).set(null)
@@ -23,7 +22,6 @@ function* deletePropFromTrickAsync(action){
     }
 
 }
-
 
 function* deleteTrickAsync(action){
     try{
@@ -43,7 +41,6 @@ function* addPropToTrickAsync(action){
     }
 }
 
-// Make this work
 function* setTricksAsync(action) {
     try{
 
@@ -92,8 +89,6 @@ function* deletePropAsync(action){
     }
 }
 
-
-// Make this work
 function* setPropsAsync(action) {
     try{
 
@@ -107,28 +102,6 @@ function* setPropsAsync(action) {
             return arraySnap
         })
        yield put({type: 'SET_PROPS_ASYNC', props: propList})
-    } catch(error) {
-        yield console.log(error)
-    }
-}
-
-// Make this work
-function* setCurrentTrick(action) {
-    try{
-
-        const currentTrick = yield database.ref('/magicapp/' + action.uid + '/tricks/' + action.trickId)
-        .once('value')
-        .then(x => x.val())
-        .then((snapShot) => {
-            var tmpProps = {...snapShot.props}
-            var arraySnap = []
-            Object.keys(tmpProps).map(key => {
-                arraySnap.push(tmpProps[key])
-            })
-            snapShot.props = arraySnap
-            return snapShot
-        })
-       yield put({type: 'SET_CURRENT_TRICK_ASYNC', trick: currentTrick})
     } catch(error) {
         yield console.log(error)
     }

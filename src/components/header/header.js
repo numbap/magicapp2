@@ -12,8 +12,7 @@ const Header = (props) => {
         <nav className="my-2 my-md-0 mr-md-3">
           <NavLink to={'/'} className="p-2 text-dark" activeClassName="font-weight-bold" exact>Home</NavLink> - 
           <NavLink to={'/add' } className="p-2 text-dark" activeClassName="font-weight-bold" exact>Add</NavLink> - 
-          <NavLink to={'/props' } className="p-2 text-dark" activeClassName="font-weight-bold" exact>Edit Props</NavLink> - 
-          <NavLink to={'/404Page' } className="p-2 text-dark" activeClassName="font-weight-bold" exact>404 Error</NavLink>
+          <NavLink to={'/props' } className="p-2 text-dark" activeClassName="font-weight-bold" exact>Edit Props</NavLink>
         </nav>
         <button className="btn btn-outline-primary" onClick={ () => auth.signOut() }><i className="fas fa-sign-out-alt" ></i> SIGN OUT</button>
       </div>
