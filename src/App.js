@@ -12,7 +12,6 @@ import EditProps from './components/edit-props/edit-props'
 class App extends React.Component {
   constructor(props){
     super(props)
-    console.log('dddddd')
   }
 
   render(){

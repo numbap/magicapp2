@@ -21,13 +21,11 @@ class PropList extends React.Component{
     return (
       <div className="col-md-4">
 
-
-
-      <div class="card">
-        <div class="card-header">
+      <div className="card">
+        <div className="card-header">
           Prop List
         </div>
-        <div class="card-body">
+        <div className="card-body">
           
             <table className="table">
             <thead>
@@ -48,14 +46,10 @@ class PropList extends React.Component{
                     }}></i></td>
                     </tr>
                 ))}
-    
-    
-    
+        
                 <tr>
                 <td>      
-    
-    
-    
+  
                   <select 
                   className="custom-select mr-sm-2" id="inlineFormCustomSelect"
                   onChange={e =>{
@@ -71,9 +65,7 @@ class PropList extends React.Component{
                   ))}
                 
                 </select>
-                
-    
-    
+                  
                 </td>
                 <td>
                     <input 
@@ -94,18 +86,11 @@ class PropList extends React.Component{
                 
                 </tr>
     
-    
-    
             </tbody>
             </table>          
           
-          
         </div>
       </div>
-
-
-
-
 
       </div>
     );
@@ -141,34 +126,4 @@ const mapStateToProps = state => {
 
 
   export default connect(mapStateToProps, mapDispatchToProps)(PropList);
-
-
-
-
-
-
-
-
-
-
-
-
-
-//   <select 
-//   className="custom-select mr-sm-2" id="inlineFormCustomSelect"
-//   onChange={e =>{
-//       this.setState({ 
-//           propId:e.target.value, 
-//           description: this.props.props.filter(x => x.id === e.target.value)[0].description
-//       })
-//   }} 
-//   value={this.state.prop.propId}>
-//   <option value="" >Select Prop...</option>
-//   {this.props.props.map(x => (
-//        <option key={x.id} value={x.id}>{x.description}</option>
-//   ))}
-
-// </select>
-
-
 

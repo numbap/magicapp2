@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
-import database, {auth, firebase, googleAuthProvider } from '../../firebase/firebase';
+import { Link, NavLink } from 'react-router-dom';
+import {auth } from '../../firebase/firebase';
 
 const Header = (props) => {
     return (

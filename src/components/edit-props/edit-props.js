@@ -56,7 +56,7 @@ class EditProps extends React.Component{
             <tbody>
                 {this.props.props.map((x, i) => (
                     <tr key={x.id}>
-                    <th scope="row">{i}</th>
+                    <th scope="row">{i + 1}</th>
                     <td>{x.description}</td>
                     <td><i className="fas fa-trash-alt" style={{cursor: 'pointer'}} onClick={() => this.handleDelete(x.id, this.props.user.uid)}></i></td>
                     </tr>
@@ -122,19 +122,3 @@ const mapDispatchToProps = (dispatch, props) => ({
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProps);
 
-
-
-
-
-
-
-
-
-
-// {this.props.props.map((x, i) => (
-//     <tr key={x.id}>
-//     <th scope="row">{i}</th>
-//     <td>{x.description}</td>
-//     <td><i className="fas fa-trash-alt" style={{cursor: 'pointer'}} onClick={() => this.handleDelete(x.id, this.props.user.uid)}></i></td>
-//     </tr>
-// ))}

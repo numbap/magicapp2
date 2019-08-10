@@ -4,8 +4,6 @@ import { connect } from 'react-redux'
 const NotFound = (props) => {
     console.log(props)
     return (
-  
-
 
       <div className="container">
       <div className="row">
@@ -15,12 +13,8 @@ const NotFound = (props) => {
       </div>
       <div className="row">          
 
-
-
       </div>
   </div>
-
-
     );
   }
 
