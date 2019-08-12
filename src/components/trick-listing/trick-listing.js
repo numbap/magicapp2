@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom' 
+import NoteForm from '../note-form/note-form';
 
 
 const TrickListing = (props) => {
@@ -38,6 +39,11 @@ const TrickListing = (props) => {
                 </tr>
               </tbody>
             </table>
+
+
+
+          <NoteForm trickId={"FrontPage"}/>
+
           </div>
       </div>
     );

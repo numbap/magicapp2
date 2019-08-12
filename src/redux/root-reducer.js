@@ -7,18 +7,14 @@ import tricksReducer from './tricks/tricks-reducer'
 import propsReducer from './props/props-reducer'
 import userReducer from './user/user-reducer'
 import currentTrickReducer from './current-trick/current-trick-reducer';
-
-const persistConfig = {
-    key: 'root',
-    storage,
-    whitelist: ['cart']
-}
+import notesReducer from './notes/notes-reducer'
 
 const rootReducer = combineReducers({
     tricks: tricksReducer,
     props: propsReducer,
     user: userReducer,
-    currentTrick: currentTrickReducer
+    currentTrick: currentTrickReducer,
+    notes: notesReducer
 })
 
 export default rootReducer

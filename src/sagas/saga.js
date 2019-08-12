@@ -1,6 +1,39 @@
 import {takeEvery, put, all} from 'redux-saga/effects'
 import database from '../firebase/firebase';
 
+const INITIAL_PROPS = [
+    {
+        description: 'Rope',
+        id: "1",
+        notes: ''
+    },
+    {
+        description: 'Cards',
+        id: "2",
+        notes: ''
+    },
+    {
+        description: 'Mic Stand',
+        id: "3",
+        notes: ''
+    },
+    {
+        description: 'Silk Scarves',
+        id: "4",
+        notes: ''
+    },
+    {
+        description: 'Close-Up Pad',
+        id: "5",
+        notes: ''
+    },
+    {
+        description: 'Sponge Balls',
+        id: "6",
+        notes: ''
+    }
+]
+
 function* addTrickAsync(action){
     try{
         let firebaseTrick = {...action.trick}
@@ -107,6 +140,71 @@ function* setPropsAsync(action) {
     }
 }
 
+function* setNotesAsync(action) {
+    try{
+        const noteList = yield database.ref('/magicapp/' + action.uid + '/notes/')
+        .once('value')
+        .then((snapShot) => {
+            var arraySnap = []
+            snapShot.forEach(x => {
+                arraySnap.push(x.val())
+            })
+            return arraySnap
+        })
+       yield put({type: 'SET_NOTES_ASYNC', notes: noteList})
+    } catch(error) {
+        yield console.log(error)
+    }
+}
+
+function* deleteNoteAsync(action){
+    try{
+        console.log('magicapp/' + action.uid + '/notes/' + action.noteId)
+        yield database.ref('/magicapp/' + action.uid + '/notes/' + action.noteId).set(null)
+        yield put({type: 'DELETE_NOTE_ASYNC', noteId: action.noteId})
+    } catch(error){
+        yield console.log(error)
+    }
+}
+
+function* addNoteAsync(action){
+    try{
+        yield database.ref('/magicapp/' + action.uid + '/notes/' + action.note.id).set(action.note)
+        yield put({type: 'ADD_NOTE_ASYNC', note: action.note})
+    } catch(error){
+        yield console.log(error)
+    }
+}
+
+
+function* initializeAsync(action) {
+    try{
+
+        const trickList = yield database.ref('/magicapp/' + action.uid + '/initialized/')
+        .once('value')
+        console.log(trickList.val(), "<,,,,,,,,,,,,,,,,")
+        if(!trickList.val()){
+            yield put({type: 'ADD_TRICK', trick: {
+                id: "1",
+                props:[],
+                name: "First sample trick",
+                script: "<p>This is the first sample script. Plot out the script of your trick here. </p>"
+            }, uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[0], uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[1], uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[2], uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[3], uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[4], uid: action.uid})
+            yield put({type: 'ADD_PROP', prop: INITIAL_PROPS[5], uid: action.uid})
+
+            yield database.ref('/magicapp/' + action.uid + '/initialized/').set('TRUE')
+        }
+    } catch(error) {
+        yield console.log(error)
+    }
+}
+
+
 export function* rootSaga() {
     yield all([
         takeEvery('ADD_PROP_TO_TRICK', addPropToTrickAsync),
@@ -116,6 +214,10 @@ export function* rootSaga() {
         takeEvery('SET_TRICKS', setTricksAsync),
         takeEvery('ADD_PROP', addPropAsync),
         takeEvery('DELETE_PROP', deletePropAsync),
-        takeEvery('SET_PROPS', setPropsAsync)
+        takeEvery('SET_PROPS', setPropsAsync),
+        takeEvery('SET_NOTES', setNotesAsync),
+        takeEvery('DELETE_NOTE', deleteNoteAsync),
+        takeEvery('ADD_NOTE', addNoteAsync), 
+        takeEvery('INITIALIZE', initializeAsync)
     ])
 }

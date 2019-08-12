@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import TrickForm from '../trick-form/trick-form'
 import PropList from '../proplist/proplist'
-import uuid from 'uuid'
+import NoteForm from '../note-form/note-form'
 
 
 class EditTrick extends React.Component{
@@ -41,10 +41,8 @@ class EditTrick extends React.Component{
   }
 
   handlePropSave = async (prop, trickId, uid) => {
-    console.log(prop, "This is the prop")
     if(prop.description && parseInt(prop.quantity)){
       await this.props.startAddPropToTrick(prop, trickId, uid)
-      await console.log(this.props.prop)
     }
   }
 
@@ -65,7 +63,7 @@ class EditTrick extends React.Component{
           if(x.id === this.props.match.params.id){
 
             return (
-            <div>
+            <div key={x.id}>
             
                 <div className="row">
                 <div className="col-md-12">
@@ -83,11 +81,17 @@ class EditTrick extends React.Component{
                     handleNameChange={this.nameChangeHandler} 
                     />
                   <p></p>
-                  <button type="button" className="btn btn-primary float-left" onClick={this.handleSave}>Save</button>
-                  <button type="button" className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>
+                  <div>
+                    <button type="button" className="btn btn-primary float-left" onClick={this.handleSave}>Save</button>
+                    <button type="button" className="btn btn-danger float-right" onClick={this.handleDelete}>Delete</button>
+                  </div>
+                  <br/><br/>
+                  <NoteForm trickId={x.id} />
                 </div>
 
                 <PropList handleSave={this.handlePropSave} handleDelete={this.handlePropDelete} trick={x} />
+
+
 
             </div>            
             
@@ -148,7 +152,8 @@ const mapDispatchToProps = (dispatch, props) => ({
 const mapStateToProps = state => {
     return { 
       user: state.user, 
-      tricks: state.tricks
+      tricks: state.tricks,
+      notes: state.notes
     }
 }
 

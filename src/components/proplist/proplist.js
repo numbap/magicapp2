@@ -53,10 +53,12 @@ class PropList extends React.Component{
                   <select 
                   className="custom-select mr-sm-2" id="inlineFormCustomSelect"
                   onChange={e =>{
-                      this.setState({ 
+                      if(e.target.value){
+                        this.setState({ 
                           propId:e.target.value, 
                           description: this.props.props.filter(x => x.id === e.target.value)[0].description
                       })
+                    }
                   }} 
                   value={this.state.propId}>
                   <option value="" >Select Prop...</option>
@@ -65,7 +67,6 @@ class PropList extends React.Component{
                   ))}
                 
                 </select>
-                  
                 </td>
                 <td>
                     <input 
@@ -75,7 +76,11 @@ class PropList extends React.Component{
                         placeholder="Quantity"
                         value={this.state.quantity}/>
                 </td>
-                <td><button 
+                <td></td>
+                </tr>
+                <tr>
+                <td><br/>
+                <button 
                 type="button" 
                 className="btn btn-primary"
                 onClick={() => {
@@ -83,7 +88,8 @@ class PropList extends React.Component{
                   this.setState({id: '', propId: '', description: '', quantity: 0 })
                 }}
                 >Add</button></td>
-                
+                <td></td>
+                <td></td>
                 </tr>
     
             </tbody>

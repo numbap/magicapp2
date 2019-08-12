@@ -34,8 +34,10 @@ firebase.auth().onAuthStateChanged( async (user) => {
             l: user.l,
             uid: user.uid
         }})
+        await store.dispatch({type: 'INITIALIZE', uid: user.uid})
         await store.dispatch({type: 'SET_TRICKS', uid: user.uid})
         await store.dispatch({type: 'SET_PROPS', uid: user.uid})
+        await store.dispatch({type: 'SET_NOTES', uid: user.uid})
         await ReactDOM.render(jsx, document.getElementById('root'));
     } else {
         store.dispatch({type: 'LOG_OUT'})

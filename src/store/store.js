@@ -5,6 +5,7 @@ import createSagaMiddleware from 'redux-saga'
 import userReducer from '../redux/user/user-reducer';
 import {rootSaga } from '../sagas/saga'
 import currentTrickReducer from '../redux/current-trick/current-trick-reducer';
+import notesReducer from '../redux/notes/notes-reducer'
 
 const sagaMiddleware = createSagaMiddleware();
 export default () => {
@@ -13,7 +14,8 @@ export default () => {
       tricks: tricksReducer, 
       props: propsReducer,
       user: userReducer,
-      currentTrick: currentTrickReducer
+      currentTrick: currentTrickReducer,
+      notes: notesReducer
     }),
     applyMiddleware(sagaMiddleware)
   );
