@@ -40,15 +40,8 @@ class NoteForm extends React.Component {
                 </div>
               )
 
-
-
-
             ))}
 
-
-  
-  
-  
             <div className="form-group" >
   
             <br/><br/><br/>

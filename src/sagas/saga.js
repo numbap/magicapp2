@@ -221,3 +221,5 @@ export function* rootSaga() {
         takeEvery('INITIALIZE', initializeAsync)
     ])
 }
+
+export { addTrickAsync }

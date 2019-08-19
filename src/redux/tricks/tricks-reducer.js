@@ -9,7 +9,6 @@ const tricksReducer = (state = INITIAL_STATE, action) => {
         case 'DELETE_TRICK_ASYNC':
             return state.filter(x => x.id !== action.trickId)
         case 'SET_TRICKS_ASYNC':
-            console.log('setting tricks', action.tricks)
             return action.tricks
         case 'ADD_PROP_TO_TRICK_ASYNC':
             var tmpAddProp = [...state]
